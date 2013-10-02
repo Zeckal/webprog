@@ -8,7 +8,7 @@ for (var i=0; i<10; i++)
 		theMines[i] = myNum;
 	}
 }
-console.log(theMines);
+//console.log(theMines);
 //console.log(state);
 
 function loadgame() {	
