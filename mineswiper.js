@@ -1,11 +1,14 @@
 var theMines= new Array();
 var state = new Array();
+var mineCount = 0;
+var blocksLeft = 2;
 for (var i = 0; i < 100; i++) state[i] = 0;
 for (var i=0; i<10; i++)
 {
-	myNum = Math.floor((Math.random()*100));
-	if (theMines.indexOf(myNum) == -1 ) {
+	myNum = Math.floor((Math.random()*100));	//this has a chance to not produce 10 mines, as some will be added to the same box ~andrew
+	if (theMines.indexOf(myNum) == -1 ) {		//Thus we need to count the mines in play to see how many are actually added
 		theMines[i] = myNum;
+		mineCount = mineCount + 1;
 	}
 }
 //console.log(theMines);
@@ -54,6 +57,34 @@ function minesclick(evt) {
 	//clicky.innerText=canvy;
 
 	if(evt.button === 0) {
+		if((100 - blocksLeft) < mineCount){ //check to see if there are only as many blocks as their are mines left
+			//GameWin();
+			context.beginPath();
+			context.arc(200,200,100,0,2*Math.PI);
+			context.fillStyle="#ffff00";
+			context.fill();
+			context.stroke();
+			context.beginPath();
+			context.arc(200,200,75,0,Math.PI);
+			context.fillStyle="#000000";
+			context.fill();
+			context.stroke();
+			context.beginPath();
+			context.arc(200,200,70,0,Math.PI);
+			context.fillStyle="#ffff00";
+			context.fill();
+			context.stroke();
+			context.beginPath();
+			context.arc(150,150,20,Math.PI,2*Math.PI);
+			context.fillStyle="#000000";
+			context.fill();
+			context.stroke();
+			context.beginPath();
+			context.arc(250,150,20,Math.PI,2*Math.PI);
+			context.fillStyle="#000000";
+			context.fill();
+			context.stroke();
+			}
 		drawmine(canvx, canvy);
         }
 
@@ -89,35 +120,64 @@ function drawmine(locx,locy) {
 	myx = (Math.floor(locx/40)*40)+20;
 	myy = (Math.floor(locy/40)*40)+20;
 	var pos = (10 * realy) + realx;
-        state[pos] = -1;
-	
-	if (getifMine(locx,locy)) {
-		var mycanvas = document.getElementById("mineswiper");
-		var context = mycanvas.getContext("2d");
-		context.beginPath();
-		context.arc(myx,myy,10,0,2*Math.PI);
-		context.fillStyle="black";
-		context.fill();
-	
-		context.beginPath();
-		context.moveTo(myx-15,myy-15);
-		context.lineTo(myx+15,myy+15);
-		context.stroke();
-		context.beginPath();
-		context.moveTo(myx+15,myy-15);
-		context.lineTo(myx-15,myy+15);
-		context.stroke();
-		context.beginPath();
-		context.moveTo(myx-15,myy);
-		context.lineTo(myx+15,myy);
-		context.stroke();
-		context.beginPath();
-		context.moveTo(myx,myy-15);
-		context.lineTo(myx,myy+15);
-		context.stroke();
-	}
-	else {
-		adjMines(locx,locy);
+	if(state[pos] != -1){	//don't recount or repaint the same squares
+		if (getifMine(locx,locy)) {
+			var mycanvas = document.getElementById("mineswiper");
+			var context = mycanvas.getContext("2d");
+			context.beginPath();
+			context.arc(myx,myy,10,0,2*Math.PI);
+			context.fillStyle="black";
+			context.fill();
+		
+			context.beginPath();
+			context.moveTo(myx-15,myy-15);
+			context.lineTo(myx+15,myy+15);
+			context.stroke();
+			context.beginPath();
+			context.moveTo(myx+15,myy-15);
+			context.lineTo(myx-15,myy+15);
+			context.stroke();
+			context.beginPath();
+			context.moveTo(myx-15,myy);
+			context.lineTo(myx+15,myy);
+			context.stroke();
+			context.beginPath();
+			context.moveTo(myx,myy-15);
+			context.lineTo(myx,myy+15);
+			context.stroke();
+			
+			//GameLose();
+			context.beginPath();
+			context.arc(200,200,100,0,2*Math.PI);
+			context.fillStyle="#ffff00";
+			context.fill();
+			context.stroke();
+			context.beginPath();
+			context.moveTo(175,200);
+			context.lineTo(225,225);
+			context.fillStyle="#000000";
+			context.stroke();
+			context.beginPath();
+			context.moveTo(225,200);
+			context.lineTo(175,225);
+			context.fillStyle="#000000";
+			context.stroke();
+			context.beginPath();
+			context.arc(150,150,20,0,Math.PI);
+			context.fillStyle="#000000";
+			context.fill();
+			context.stroke();
+			context.beginPath();
+			context.arc(250,150,20,0,Math.PI);
+			context.fillStyle="#000000";
+			context.fill();
+			context.stroke();
+		}
+		else {
+			adjMines(locx,locy);
+			blocksLeft = blocksLeft + 1;
+		}
+		state[pos] = -1;
 	}
 }
 
@@ -175,4 +235,62 @@ function adjMines(locx,locy) {
 		context.fillStyle = "black";
 		context.fillText(adjMine,myx,myy);
 	}
+}
+
+
+function GameWin() {
+	context.beginPath();
+	context.arc(200,200,100,0,2*Math.PI);
+	context.fillStyle="#ffff00";
+	context.fill();
+	context.stroke();
+	context.beginPath();
+	context.arc(200,200,75,0,Math*PI);
+	context.fillStyle="#000000";
+	context.fill();
+	context.stroke();
+	context.beginPath();
+	context.arc(200,200,70,0,Math*PI);
+	context.fillStyle="#ffff00";
+	context.fill();
+	context.stroke();
+	context.beginPath();
+	context.arc(150,150,20,0,Math.PI);
+	context.fillStyle="#000000";
+	context.fill();
+	context.stroke();
+	context.beginPath();
+	context.arc(250,150,20,0,Math.PI);
+	context.fillStyle="#000000";
+	context.fill();
+	context.stroke();
+}
+
+function GameLose() {
+	context.beginPath();
+	context.arc(200,200,100,0,2*Math.PI);
+	context.fillStyle="#ffff00";
+	context.fill();
+	context.stroke();
+	context.beginPath();
+	context.moveTo(175,200);
+	context.lineTo(225,225);
+	context.fillStyle="#000000";
+	context.stroke();
+	context.beginPath();
+	context.moveTo(225,200);
+	context.lineTo(175,225);
+	context.fillStyle="#000000";
+	context.stroke();
+	context.beginPath();
+	context.arc(150,150,20,0,Math.PI);
+	context.fillStyle="#000000";
+	context.fill();
+	context.stroke();
+	context.beginPath();
+	context.arc(250,150,20,0,Math.PI);
+	context.fillStyle="#000000";
+	context.fill();
+	context.stroke();
+
 }
