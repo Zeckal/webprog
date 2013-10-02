@@ -1,4 +1,6 @@
 var theMines= new Array();
+var state = new Array();
+for (var i = 0; i < 100; i++) state[i] = 0;
 for (var i=0; i<10; i++)
 {
 	myNum = Math.floor((Math.random()*100));
@@ -7,11 +9,16 @@ for (var i=0; i<10; i++)
 	}
 }
 console.log(theMines);
+//console.log(state);
 
 function loadgame() {	
 	var mycanvas = document.getElementById("mineswiper");
 	var context = mycanvas.getContext("2d");
 	
+	$(mycanvas).bind('contextmenu', function(e){
+		return false;
+	});
+
 	for (var i=1; i<10; i++)
 	{
 		context.beginPath();
@@ -32,20 +39,57 @@ function minesclick(evt) {
 	//var clickx = document.getElementById('clickx');
 	//var clicky = document.getElementById('clicky');
 	var mycanvas = document.getElementById("mineswiper");
+	var context = mycanvas.getContext("2d");
 	
 	canvx = event.pageX - mycanvas.offsetLeft;
 	canvy = event.pageY - mycanvas.offsetTop;
-	
+
+	realx = Math.floor(((Math.floor(canvx/40)*40)+20)/40);
+	realy = Math.floor(((Math.floor(canvy/40)*40)+20)/40);
+
+        var pos = (10 * realy) + realx;
+        //console.log(pos);	
+
 	//clickx.innerText=canvx;
 	//clicky.innerText=canvy;
-	
-	drawmine(canvx, canvy);
+
+	if(evt.button === 0) {
+		drawmine(canvx, canvy);
+        }
+
+	if(evt.button === 2) {
+        	if (state[pos] === 0) {
+			context.clearRect((Math.floor(canvx/40)*40)+10,(Math.floor(canvy/40)*40)+10,20,20);  
+			context.beginPath();
+			context.rect((Math.floor(canvx/40)*40)+10,(Math.floor(canvy/40)*40)+10,20,20);
+			context.fillStyle = "red";
+			context.fill();
+          		state[pos] = 1; 
+		}
+       		else if (state[pos] === 1) {
+			context.clearRect((Math.floor(canvx/40)*40)+10,(Math.floor(canvy/40)*40)+10,20,20);
+			context.beginPath();
+			context.rect((Math.floor(canvx/40)*40)+10,(Math.floor(canvy/40)*40)+10,20,20);
+			context.fillStyle = "black";
+			context.fill();
+          		state[pos] = 2; 
+		}
+        	else if (state[pos] === 2) {
+			context.clearRect((Math.floor(canvx/40)*40)+10,(Math.floor(canvy/40)*40)+10,20,20);
+			context.beginPath();
+			context.rect((Math.floor(canvx/40)*40)+10,(Math.floor(canvy/40)*40)+10,20,20);
+			context.fillStyle = "white";
+			context.fill();
+       		   	state[pos] = 0; 
+		}
+	}
 }
 
 function drawmine(locx,locy) {
 	myx = (Math.floor(locx/40)*40)+20;
 	myy = (Math.floor(locy/40)*40)+20;
-	
+	var pos = (10 * realy) + realx;
+        state[pos] = -1;
 	
 	if (getifMine(locx,locy)) {
 		var mycanvas = document.getElementById("mineswiper");
