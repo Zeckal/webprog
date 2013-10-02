@@ -1,0 +1,8 @@
+This is a minesweeper game for the First Team Assignment. 
+We have implemented Several CSS3 features to give the game some simple context. 
+This includes Boarders, font styles, backgrounds, and text shadow.
+The game is not stupidly simple and does take some work to get the mine detection and adjacency numbers.
+No special librarys were used.
+
+Difficulties:
+I couldn't get GameWin() and GameLose() functions to work properly, and had to insert the code directly instead of a function call (Andrew)
