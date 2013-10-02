@@ -1,8 +1,12 @@
 var theMines= new Array();
 for (var i=0; i<10; i++)
 {
-	theMines[i] = Math.floor((Math.random()*100));
+	myNum = Math.floor((Math.random()*100));
+	if (theMines.indexOf(myNum) == -1 ) {
+		theMines[i] = myNum;
+	}
 }
+console.log(theMines);
 
 function loadgame() {	
 	var mycanvas = document.getElementById("mineswiper");
@@ -97,14 +101,18 @@ function adjMines(locx,locy) {
 	
 	for (var x = mycellx - 1; x <= mycellx + 1; x++)
 	{
+		if ( x >= 0 && x <= 9) {
 		for (var y = mycelly - 1; y <= mycelly + 1; y++)
 		{
+			if ( y >= 0 && y <= 9) {
 			for (var mine = 0; mine < 10; mine++)
 			{
-				if ( x + ( 10 * y ) == theMines[mine] ) {
+				if ( x + (y*10) == theMines[mine] ) {
 					adjMine++;
 				}
 			}
+			}
+		}
 		}
 	}
 
