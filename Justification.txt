@@ -5,4 +5,16 @@ The game is not stupidly simple and does take some work to get the mine detectio
 No special librarys were used.
 
 Difficulties:
-I couldn't get GameWin() and GameLose() functions to work properly, and had to insert the code directly instead of a function call (Andrew)
+I couldn't get GameWin() and GameLose() functions to work properly, and had to insert the code directly instead of a function call
+
+
+webprog
+=======
+
+webprogramming
+
+ashaw@mines.edu
+krisper@mines.edu
+mheck@mines.edu
+
+MineSweeper 10x10 Grid

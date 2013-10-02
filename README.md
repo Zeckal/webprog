@@ -3,7 +3,7 @@ webprog
 
 webprogramming
 
-ashaw@mines.edu
+anshaw@mines.edu
 krisper@mines.edu
 mheck@mines.edu
 
