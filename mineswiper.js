@@ -107,13 +107,20 @@ function adjMines(locx,locy) {
 			}
 		}
 	}
+
+	var mycanvas = document.getElementById("mineswiper");
+	var context = mycanvas.getContext("2d");
 	
+	context.beginPath();
+	context.rect(myx-20,myy-20,40,40);
+	context.fillStyle = "gray";
+	context.fill();
+
 	if (adjMine) {
-		var mycanvas = document.getElementById("mineswiper");
-		var context = mycanvas.getContext("2d");
 		context.font = "bold 12pt sans-serif";
 		context.textBaseline = "middle";
 		context.textAlign = "center";
+		context.fillStyle = "black";
 		context.fillText(adjMine,myx,myy);
 	}
 }
